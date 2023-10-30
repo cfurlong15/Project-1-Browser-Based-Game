@@ -1,0 +1,30 @@
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+}
+
+body {
+    text-align: center;
+}
+
+#grid {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-init button{
+    background-color: rgb(37, 103, 196);
+    color: white;
+    border-radius: 5px;
+    
+}
+
+#grid button {
+    height: 50px;
+    width: 50px;
+}
