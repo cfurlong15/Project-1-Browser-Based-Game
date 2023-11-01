@@ -8,23 +8,39 @@ h1 {
 
 body {
     text-align: center;
+    background-color: rgb(16, 120, 172);
 }
 
 #grid {
+    height: 45rem;
+    width: 45rem;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
-    position: relative;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
 }
 
-#game-init button{
+
+#game-init button {
     background-color: rgb(37, 103, 196);
     color: white;
     border-radius: 5px;
-    
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.5rem;
+    height: 2rem;
+    width: 9rem;
+    text-align: center;
+    font-size: 20px;
 }
 
-#grid button {
-    height: 50px;
-    width: 50px;
+#grid div {
+    background-color: gray;
+    height: 9rem;
+    width: 9rem;
+    margin: 0.5rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
 }
