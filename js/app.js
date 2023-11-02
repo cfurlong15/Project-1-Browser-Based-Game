@@ -31,12 +31,6 @@ const INIT_STATE = {
 
 
 /*----- cached elements -----*/
-//querySelector and getElementById, etc.
-
-// const startBtnEl = document.querySelector("#start");
-const resetBtnEl = document.querySelector("#reset");
-// const attemptsEl = document.querySelector("#attempts");
-
 
 
 const cardEls = document.querySelectorAll("#grid > div");
@@ -100,7 +94,7 @@ start.onclick = shuffleNodes;
 //     card.addEventListener("click", flipCard);
 // })
 
-const firstPair = document.querySelectorAll(".first-pair")
+const firstPair = document.querySelectorAll(".blue")
 const secondPair = document.querySelectorAll(".second-pair")
 //console.log(firstPair)
 
@@ -111,75 +105,90 @@ let num2;
 let class1;
 let class2;
 let flip = 0
-attemptsRemaining.innerHTML = 16;
+attemptsRemaining.innerHTML = 20;
+let firstColor;
+let win = 0;
 function flipCard(evt) {
+    let cardColor = ""
     flip++
     const card = evt.target
-    console.log(card.getAttribute("class"))
-    const cardClass = card.getAttribute("class");
+   // console.log(card.getAttribute("class"))
+    let cardClass = card.getAttribute("class");
+    //console.log(class1)
+    if(cardClass === "first-pair") {
+         cardColor = "blue"
+    } else if(cardClass === "second-pair") {
+        cardColor = "green"
+    } else if(cardClass === "third-pair") {
+        cardColor = "yellow"
+    } else if(cardClass === "fourth-pair") {
+        cardColor = "orange"
+    } else if(cardClass === "fifth-pair") {
+        cardColor = "pink"
+    } else if(cardClass === "sixth-pair") {
+        cardColor = "purple"
+    } else if(cardClass === "seventh-pair") {
+        cardColor = "red"
+    } else if(cardClass === "eighth-pair") {
+        cardColor = "black"
+    } 
     if(flip === 1) {
-        attemptsRemaining.innerHTML--
+    attemptsRemaining.innerHTML--
         num1=card
         class1=cardClass
-        card.style.backgroundColor = "blue"
+        firstColor=cardColor
+        //card.style.background = "blue"
+        card.classList.add(cardColor)
     } else if(flip === 2) {
         attemptsRemaining.innerHTML--
         num2 = card
         class2 = cardClass
-        card.style.backgroundColor = "blue"
+        card.classList.add(cardColor)
     } 
+
+    
 console.log(attemptsRemaining.innerHTML)
-    if (class1 === class2) {
-        console.log("same")
+    console.log(class1, class2)
+    //console.log(num1, num2)
+if (class1 === class2 && flip === 2) {
+       console.log("same")
         flip = 0
+        win++
     }else if (flip === 2 && class1 !== class2) {
-        num1.style.backgroundColor = "gray";
-        num2.style.backgroundColor = "gray"
-        console.log("different")
+        num1.classList.remove(firstColor)
+        num2.classList.remove(cardColor)
+       console.log("different")
         flip = 0;
     }
-    //DRAFT
-    
-    
-    
-    
-    
-    
-    // if(card.id === num1) {
-    //     card.style.backgroundColor = "blue";
-    // }if(card.id === num2) {
-    //     card.style.backgroundColor = "blue"
-    // }
-    // // else if(card.id !== "1" && card.id !== "2") {
-    // //     card.style.backgroundColor = "green"
-    // // }
-    // else if(card.id != "1" && card.id != "2") {
-    //     card1.style.background = "gray";
-    // }
+
+ if (win === 8) {
+     alert("You Win!")
+ }
+
 if (attemptsRemaining.innerHTML <=0) {
     alert("Game Over")
     console.log("GAME OVER")
 }
 }
+
 cardEls.forEach(function(card) {
     card.addEventListener("click", flipCard)
 })
-// card1.addEventListener("click", flipCard)
-// card2.addEventListener("click", flipCard)
-// card3.addEventListener("click", flipCard)
+
+
+const resetBtnEl = document.getElementById("reset");
+
+function reset(evt) {
+    if (evt.target == resetBtnEl) {
+        attemptsRemaining.innerHTML = 20
+        cardEls.forEach(function(card) {
+            card.classList.add("gray")
+        })
+        flip = 0
+    }
+}
+resetBtnEl.addEventListener("click", reset)
 
 
 
-// card1.addEventListener("click", function(evt) {
-//     if(evt.currentTarget.id = "1") {
-//         card1.style.backgroundColor = "blue";
-//     } else {
-//         card1.style.backgroundColor = "gray";
-//     }
-// })      
-
-// card2.addEventListener("click", function(evt) {
-//     if(evt.currentTarget.id = "2") {
-//         card2.style.backgroundColor = "blue";
-//     } 
-// })
+    
