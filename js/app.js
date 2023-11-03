@@ -1,27 +1,7 @@
-console.log("js: loaded")
-
-// WHAT I NEED:
-    // "Start" button needs to begin the game, shuffle cards, and bring "Attempts Remaining" to 16
-    // We need to be able to interact with each of the cards
-    // Each card needs to have a color, as well as a blank face attributed
-    // After the second click, if the cards DO NOT match, they need to flip back to their blank side
-    // "Attempts Remaining" needs to start at a number, and count down with every click. Let's start with 16
-    // If "Attempts Remaining" = 0, browser must display "Game Over: YOU LOSE"
-    // If all cards are flipped successfully BEFORE "Attempts Remaining" = 0, browser must display "YOU WIN"
-    // "Reset" button needs to turn cards to their blank sides and bring "Attempts Remaining" to 16
-    // "Your Score" will be an icebox feature 
-
-
-
-
 /*----- constants -----*/
 // initial data states
 //animation names
 //image assets paths
-
-const INIT_STATE = {
-    attempts: 16
-}
 
 
 
@@ -37,26 +17,7 @@ const cardEls = document.querySelectorAll("#grid > div");
 
 
 
-// const card1 = document.getElementById("1")
-// const card2 = document.getElementById("2")
-// const card3 = document.getElementById("3")
-// const card4 = document.getElementById("4")
-// const card5 = document.getElementById("5")
-// const card6 = document.getElementById("6")
-// const card7 = document.getElementById("7")
-// const card8 = document.getElementById("8")
-// const card9 = document.getElementById("9")
-// const card10 = document.getElementById("10")
-// const card11 = document.getElementById("11")
-// const card12 = document.getElementById("12")
-// const card13 = document.getElementById("13")
-// const card14 = document.getElementById("14")
-// const card15 = document.getElementById("15")
-// const card16 = document.getElementById("16")
-const divArray = []
 
-// const divArray = [cardEls];
-/*----- event listeners -----*/
 
 
 /*----- functions -----*/
@@ -86,19 +47,14 @@ start.onclick = shuffleNodes;
 
 
 
-// function flipCard() {
-//     this.classList.toggle('is-flipped');
-// };
 
-// cards.forEach(function (card) {
-//     card.addEventListener("click", flipCard);
-// })
 
 const firstPair = document.querySelectorAll(".blue")
 const secondPair = document.querySelectorAll(".second-pair")
-//console.log(firstPair)
 
 let attemptsRemaining = document.querySelector("#remaining");
+const youWin = document.getElementById("you-win");
+const youLose = document.getElementById("you-lose");
 
 let num1;
 let num2;
@@ -108,65 +64,86 @@ let flip = 0
 attemptsRemaining.innerHTML = 20;
 let firstColor;
 let win = 0;
+let cardId;
 function flipCard(evt) {
     let cardColor = ""
     flip++
     const card = evt.target
+    console.log(card)
+    
    // console.log(card.getAttribute("class"))
     let cardClass = card.getAttribute("class");
     //console.log(class1)
-    if(cardClass === "first-pair") {
+    if(cardClass === "first-pair" && !card.classList.contains("blue")) {
          cardColor = "blue"
-    } else if(cardClass === "second-pair") {
+         cardId = card.id
+         card.classList.add(cardColor)
+    } else if(cardClass === "second-pair" && !card.classList.contains("green")) {
         cardColor = "green"
-    } else if(cardClass === "third-pair") {
+        cardId = card.id
+        card.classList.add(cardColor)
+    } else if(cardClass === "third-pair" && !card.classList.contains("yellow")) {
         cardColor = "yellow"
-    } else if(cardClass === "fourth-pair") {
+        cardId = card.id
+        card.classList.add(cardColor)
+    } else if(cardClass === "fourth-pair" && !card.classList.contains("orange")) {
         cardColor = "orange"
-    } else if(cardClass === "fifth-pair") {
+        cardId = card.id
+        card.classList.add(cardColor)
+    } else if(cardClass === "fifth-pair" && !card.classList.contains("pink")) {
         cardColor = "pink"
-    } else if(cardClass === "sixth-pair") {
+        cardId = card.id
+        card.classList.add(cardColor)
+    } else if(cardClass === "sixth-pair" && !card.classList.contains("purple")) {
         cardColor = "purple"
-    } else if(cardClass === "seventh-pair") {
+        cardId = card.id
+        card.classList.add(cardColor)
+    } else if(cardClass === "seventh-pair" && !card.classList.contains("red")) {
         cardColor = "red"
-    } else if(cardClass === "eighth-pair") {
+        cardId = card.id
+        card.classList.add(cardColor)
+    } else if(cardClass === "eighth-pair" && !card.classList.contains("black")) {
         cardColor = "black"
+        cardId = card.id
+        card.classList.add(cardColor)
     } 
     if(flip === 1) {
     attemptsRemaining.innerHTML--
         num1=card
         class1=cardClass
         firstColor=cardColor
-        //card.style.background = "blue"
-        card.classList.add(cardColor)
-    } else if(flip === 2) {
-        attemptsRemaining.innerHTML--
+        
+     } else if(flip === 2) { 
         num2 = card
         class2 = cardClass
-        card.classList.add(cardColor)
-    } 
+    } else if(flip === 2 && cardId === card.id) {
+        flip=1
+    }
 
     
 console.log(attemptsRemaining.innerHTML)
-    console.log(class1, class2)
     //console.log(num1, num2)
 if (class1 === class2 && flip === 2) {
        console.log("same")
         flip = 0
         win++
     }else if (flip === 2 && class1 !== class2) {
+        console.log("different")
         num1.classList.remove(firstColor)
         num2.classList.remove(cardColor)
-       console.log("different")
+       
         flip = 0;
     }
 
  if (win === 8) {
-     alert("You Win!")
+   // youWin.append()
+    youWin.innerHTML = "You Win!"
+     console.log("You Win!")
  }
 
-if (attemptsRemaining.innerHTML <=0) {
-    alert("Game Over")
+if (attemptsRemaining.innerHTML < 1) {
+    //youLose.append()
+    youLose.innerHTML = "You Lose! Try Again!"
     console.log("GAME OVER")
 }
 }
@@ -179,12 +156,17 @@ cardEls.forEach(function(card) {
 const resetBtnEl = document.getElementById("reset");
 
 function reset(evt) {
-    if (evt.target == resetBtnEl) {
+    if (evt.target === resetBtnEl) {
+        flip = 0
         attemptsRemaining.innerHTML = 20
         cardEls.forEach(function(card) {
-            card.classList.add("gray")
+            card.classList.remove("blue", "green", "yellow", "orange", "pink", "purple", "red", "black")
+            win = 0
+            youWin.innerHTML = ""
+            youLose.innerHTML = ""
+            
         })
-        flip = 0
+        
     }
 }
 resetBtnEl.addEventListener("click", reset)
